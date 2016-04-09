@@ -4,11 +4,18 @@
 	function toStartWith (util, customEqualityTesters) {
 		return {
 			compare (actual, expected) {
+				if (!actual || actual.length === undefined) {
+					return {
+						pass: false,
+						message: `Expected an array`
+					}
+				}
+
 				if (actual.length < expected.length) {
 					return {
 						pass: false,
 						message: `Expected at least ${expected.length} elements`
-					};
+					}
 				} else {
 					const matching = expected.every((element, index) =>
 						util.equals(actual[index], element)
