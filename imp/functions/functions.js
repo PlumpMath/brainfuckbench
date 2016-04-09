@@ -32,16 +32,22 @@
 
 	const execute = (compiled, input, options) => {
 		const memory = new Uint8Array(options.memorySize)
+		const output = []
 		let pointer = 0
 		let programCounter = 0
 		let inputPointer = 0
-		const output = []
+		let error = null
 
 		const mapping = [
 			() => { memory[pointer]++ },
 			() => { memory[pointer]-- },
 			() => { pointer++ },
-			() => { pointer-- },
+			() => {
+				pointer--
+				if (pointer < 0) {
+					error = 'pointer out of bounds'
+				}
+			},
 			() => { output.push(memory[pointer]) },
 			() => {
 				memory[pointer] = input[inputPointer]
@@ -63,6 +69,10 @@
 			const command = compiled[programCounter]
 
 			mapping[command.opcode](command)
+
+			if (error) {
+				return { output, memory, error }
+			}
 
 			programCounter++
 		}

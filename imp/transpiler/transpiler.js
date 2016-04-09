@@ -25,11 +25,11 @@
 		mapping: new Map([
 			['+', 'm[p]++;'],
 			['-', 'm[p]--;'],
-			['>', `p++;\nif (p >= ${MEMORY_SIZE}) { return { error: "pointer out of bounds" }; }`],
-			['<', 'p--;\nif (p < 0) { return { error: "pointer out of bounds" }; }'],
+			['>', `p++;\nif (p >= ${MEMORY_SIZE}) { return { output: o, memory: m, error: "pointer out of bounds" }; }`],
+			['<', 'p--;\nif (p < 0) { return { output: o, memory: m, error: "pointer out of bounds" }; }'],
 			['.', 'o.push(m[p]);'],
 			[',', 'm[p] = input[ip]; ip++;'],
-			['[', `while (m[p]) {\ns++;\nif (s > ${ITERATIONS_MAX}) {\nreturn { error: "timeout" };\n}`],
+			['[', `while (m[p]) {\ns++;\nif (s > ${ITERATIONS_MAX}) {\nreturn { output: o, memory: m, error: "timeout" };\n}`],
 			[']', '}']
 		])
 	}

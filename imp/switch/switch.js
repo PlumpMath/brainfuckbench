@@ -26,10 +26,10 @@
 
 	const execute = (compiled, input) => {
 		const memory = new Uint8Array(16)
+		const output = []
 		let pointer = 0
 		let programCounter = 0
 		let inputPointer = 0
-		const output = []
 
 		while (programCounter < compiled.length) {
 			const instruction = compiled[programCounter]
@@ -46,6 +46,13 @@
 					break
 				case 3:
 					pointer--
+					if (pointer < 0) {
+						return {
+							output,
+							memory,
+							error: 'pointer out of bounds'
+						}
+					}
 					break
 				case 4:
 					output.push(memory[pointer])
