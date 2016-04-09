@@ -30,12 +30,13 @@
 		}
 	})()
 
-	const execute = (compiled, input, { memorySize }) => {
+	const execute = (compiled, input, { memorySize, iterationsMax }) => {
 		const memory = new Uint8Array(memorySize)
 		const output = []
 		let pointer = 0
 		let programCounter = 0
 		let inputPointer = 0
+		let iterations = 0
 		let error = null
 
 		const mapping = [
@@ -80,6 +81,15 @@
 			}
 
 			programCounter++
+
+			iterations++
+			if (iterations > iterationsMax) {
+				return {
+					output,
+					memory,
+					error: 'timeout'
+				}
+			}
 		}
 
 		return { output, memory }

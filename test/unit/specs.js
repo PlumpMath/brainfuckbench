@@ -16,14 +16,18 @@
 		],
 		errors: [
 			['<', [0, 0, 0], [], 'pointer out of bounds'],
-			['>>>>', [0, 0, 0], [], 'pointer out of bounds']
+			['>>>>', [0, 0, 0], [], 'pointer out of bounds'],
+			['+++++++++[>+++++++++[-]<-]', [], [], 'timeout']
 		]
 	}
 
 	const imps = [bf.imp.functions, bf.imp.switch, bf.imp.transpiler]
 
 	function run ({ compile, execute }, source) {
-		const options = { memorySize: 4 }
+		const options = {
+			memorySize: 4,
+			iterationsMax: 60
+		}
 		const compiled = compile(source, options)
 		return execute(compiled, [], options)
 	}

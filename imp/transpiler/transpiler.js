@@ -1,9 +1,7 @@
 (function () {
 	'use strict'
 
-	const ITERATIONS_MAX = 1000
-
-	function compile (source, { memorySize }) {
+	function compile (source, { memorySize, iterationsMax }) {
 		const header = `var m = new Uint8Array(${memorySize});\nvar p = 0;\nvar s = 0;\nvar o = [];`
 		const footer = 'return { output: o, memory: m }'
 		const mapping = new Map([
@@ -13,7 +11,7 @@
 			['<', 'p--;\nif (p < 0) { return { output: o, memory: m, error: "pointer out of bounds" }; }'],
 			['.', 'o.push(m[p]);'],
 			[',', 'm[p] = input[ip]; ip++;'],
-			['[', `while (m[p]) {\ns++;\nif (s > ${ITERATIONS_MAX}) {\nreturn { output: o, memory: m, error: "timeout" };\n}`],
+			['[', `while (m[p]) {\ns++;\nif (s > ${iterationsMax}) {\nreturn { output: o, memory: m, error: "timeout" };\n}`],
 			[']', '}']
 		])
 
