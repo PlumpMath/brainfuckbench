@@ -15,14 +15,15 @@
 			['+++[>+++[.-]<-]', [0, 0, 0], [3, 2, 1, 3, 2, 1, 3, 2, 1]]
 		],
 		errors: [
-			['<', [0, 0, 0], [], 'pointer out of bounds']
+			['<', [0, 0, 0], [], 'pointer out of bounds'],
+			['>>>>', [0, 0, 0], [], 'pointer out of bounds']
 		]
 	}
 
 	const imps = [bf.imp.functions, bf.imp.switch, bf.imp.transpiler]
 
 	function run ({ compile, execute }, source) {
-		const options = { memorySize: 16 }
+		const options = { memorySize: 4 }
 		const compiled = compile(source, options)
 		return execute(compiled, [], options)
 	}

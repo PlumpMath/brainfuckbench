@@ -30,8 +30,8 @@
 		}
 	})()
 
-	const execute = (compiled, input, options) => {
-		const memory = new Uint8Array(options.memorySize)
+	const execute = (compiled, input, { memorySize }) => {
+		const memory = new Uint8Array(memorySize)
 		const output = []
 		let pointer = 0
 		let programCounter = 0
@@ -41,7 +41,12 @@
 		const mapping = [
 			() => { memory[pointer]++ },
 			() => { memory[pointer]-- },
-			() => { pointer++ },
+			() => {
+				pointer++
+				if (pointer >= memorySize) {
+					error = 'pointer out of bounds'
+				}
+			},
 			() => {
 				pointer--
 				if (pointer < 0) {

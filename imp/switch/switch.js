@@ -4,7 +4,7 @@
 	const compile = (source) => {
 		const stack = []
 
-		return source.split('').map((char, index, array) => {
+		return source.split('').map((char, index) => {
 			switch (char) {
 				case '+': return { opcode: 0 }
 				case '-': return { opcode: 1 }
@@ -24,7 +24,7 @@
 		})
 	}
 
-	const execute = (compiled, input) => {
+	const execute = (compiled, input, { memorySize }) => {
 		const memory = new Uint8Array(16)
 		const output = []
 		let pointer = 0
@@ -43,6 +43,13 @@
 					break
 				case 2:
 					pointer++
+					if (pointer >= memorySize) {
+						return {
+							output,
+							memory,
+							error: 'pointer out of bounds'
+						}
+					}
 					break
 				case 3:
 					pointer--
