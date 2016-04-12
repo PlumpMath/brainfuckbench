@@ -27,7 +27,7 @@
 	}
 
 	const execute = (compiled, input, { memorySize, iterationsMax }) => {
-		const memory = new Uint8Array(16)
+		const memory = new Uint8Array(memorySize)
 		const output = []
 		let pointer = 0
 		let programCounter = 0
