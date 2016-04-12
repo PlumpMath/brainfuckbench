@@ -1,10 +1,10 @@
 (function () {
 	'use strict'
 
-	const compile = (source) => {
+	const compile = (source, options) => {
 		const stack = []
 
-		return source.split('').map((char, index) => {
+		const compiled = source.split('').map((char, index) => {
 			switch (char) {
 				case '+': return { opcode: 0 }
 				case '-': return { opcode: 1 }
@@ -22,6 +22,8 @@
 					return { opcode: 7, to: pair.index }
 			}
 		})
+
+		return (input) => execute(compiled, input, options)
 	}
 
 	const execute = (compiled, input, { memorySize, iterationsMax }) => {
@@ -101,7 +103,6 @@
 	window.bf.imp = window.bf.imp || {}
 	window.bf.imp.switch = {
 		name: 'switch',
-		compile,
-		execute
+		compile
 	}
 })()

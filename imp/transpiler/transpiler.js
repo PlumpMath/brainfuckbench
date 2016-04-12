@@ -21,18 +21,15 @@
 
 		const jsSource = `${header}${body}${footer}`
 
-		return new Function('input', jsSource)
-	}
+		const compiled = new Function('input', jsSource)
 
-	function execute (compiled, input) {
-		return compiled(input)
+		return (input) => compiled(input)
 	}
 
 	window.bf = window.bf || {}
 	window.bf.imp = window.bf.imp || {}
 	window.bf.imp.transpiler = {
 		name: 'transpiler',
-		compile,
-		execute
+		compile
 	}
 })();

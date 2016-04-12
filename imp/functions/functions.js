@@ -21,12 +21,14 @@
 			}]
 		])
 
-		return (source) => {
+		return (source, options) => {
 			const stack = []
 
-			return source.split('').map((char, index) =>
+			const compiled = source.split('').map((char, index) =>
 				mapping.get(char)(stack, index)
 			)
+
+			return (input) => execute(compiled, input, options)
 		}
 	})()
 
@@ -95,7 +97,6 @@
 	window.bf.imp = window.bf.imp || {}
 	window.bf.imp.functions = {
 		name: 'functions',
-		compile,
-		execute
+		compile
 	}
 })()

@@ -25,13 +25,13 @@
 
 	const imps = [bf.imp.functions, bf.imp.switch, bf.imp.transpiler]
 
-	function run ({ compile, execute }, source) {
+	function run ({ compile }, source) {
 		const options = {
 			memorySize: 4,
 			iterationsMax: 20
 		}
 		const compiled = compile(source, options)
-		return execute(compiled, [], options)
+		return compiled([])
 	}
 
 	beforeEach(() => {
