@@ -17,7 +17,9 @@
 		errors: [
 			['<', [0, 0, 0], [], 'pointer out of bounds'],
 			['>>>>', [0, 0, 0], [], 'pointer out of bounds'],
-			['+++++++++[>+++++++++[-]<-]', [], [], 'timeout']
+			['+[]', [], [], 'timeout'],
+			['++++[>++++[-]<-]', [], []],
+			['+++++[>+++++[-]<-]', [], [], 'timeout']
 		]
 	}
 
@@ -26,7 +28,7 @@
 	function run ({ compile, execute }, source) {
 		const options = {
 			memorySize: 4,
-			iterationsMax: 60
+			iterationsMax: 20
 		}
 		const compiled = compile(source, options)
 		return execute(compiled, [], options)

@@ -68,6 +68,11 @@
 				if (memory[pointer] > 0) {
 					programCounter = to
 				}
+
+				iterations++
+				if (iterations > iterationsMax) {
+					error = 'timeout'
+				}
 			}
 		]
 
@@ -81,15 +86,6 @@
 			}
 
 			programCounter++
-
-			iterations++
-			if (iterations > iterationsMax) {
-				return {
-					output,
-					memory,
-					error: 'timeout'
-				}
-			}
 		}
 
 		return { output, memory }

@@ -78,19 +78,20 @@
 					if (memory[pointer] > 0) {
 						programCounter = instruction.to
 					}
+
+					iterations++
+					if (iterations > iterationsMax) {
+						return {
+							output,
+							memory,
+							error: 'timeout'
+						}
+					}
+
 					break
 			}
 
 			programCounter++
-
-			iterations++
-			if (iterations > iterationsMax) {
-				return {
-					output,
-					memory,
-					error: 'timeout'
-				}
-			}
 		}
 
 		return { output, memory }
