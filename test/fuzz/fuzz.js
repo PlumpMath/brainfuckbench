@@ -4,19 +4,37 @@
 	const { imp } = bf
 
 	const generateCommand = (() => {
-		const commands = '+-><.'
+		const commands = '+-><.[]'
 
 		return () => commands[Math.floor(Math.random() * commands.length)]
 	})()
 
 	function generateProgram () {
 		const lengthMax = 20
+		const nestingMax = 2
 		const length = Math.floor(Math.random() * lengthMax)
 
 		let source = ''
+		let parens = 0
 
-		for (let i = 0; i < length; i++) {
-			source += generateCommand()
+		while (source.length < length || parens > 0) {
+			const command = generateCommand()
+
+			if (command === '[') {
+				if (parens > nestingMax) {
+					continue
+				} else {
+					parens++
+				}
+			} else if (command === ']') {
+				if (parens === 0) {
+					continue
+				} else {
+					parens--
+				}
+			}
+
+			source += command
 		}
 
 		return source
@@ -71,7 +89,7 @@
 	}
 
 	function test () {
-		const runs = 1000
+		const runs = 100
 
 		for (let i = 0; i < runs; i++) {
 			compare(generateProgram())
