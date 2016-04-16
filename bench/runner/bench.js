@@ -30,11 +30,11 @@
 		})
 	})
 
-	suite.on('cycle', (event) => {
+	suite.on('cycle', function (event) {
 		console.log(String(event.target))
 	})
 
-	suite.on('complete', () => {
+	suite.on('complete', function () {
 		console.log('Fastest is ', this.filter('fastest').map('name'));
 
 		// have to use these values to make sure the functions don't get optimised away
