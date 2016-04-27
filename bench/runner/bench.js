@@ -3,7 +3,12 @@
 
 	const suite = new Benchmark.Suite
 
-	const imps = [bf.imp.functions, bf.imp.switch, bf.imp.transpiler]
+	const imps = [
+		bf.imp.functions,
+		bf.imp.switch,
+		bf.imp.transpiler,
+		bf.imp.binarySearch
+	]
 
 	const options = {
 		memorySize: 4,
