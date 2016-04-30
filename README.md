@@ -20,11 +20,38 @@ This is the most common approach. The main loop looks something on the lines of:
 ```javascript
 while (running) {
 	instruction = fetchInstruction()
-	
+
 	switch (instruction) {
 		case 0x00: // ...
 		case 0x01: // ...
 		case 0x02: // ...
+		case 0x03: // ...
+	}
+}
+```
+
++ binary-search based
+
+This is similar to the switch based approach except that the number of comparisons
+required until the correct case is found is logarithmic in the worst case. The
+code that this pattern requires can reach unmanageable sizes:
+
+```javascript
+while (running) {
+	instruction = fetchInstruction()
+
+	if (instruction < 0x02) {
+		if (instruction < 0x01) {
+			// 0x00 ...
+		} else {
+			// 0x01 ...
+		}
+	} else {
+		if (instruction < 0x03) {
+			// 0x02 ...
+		} else {
+			// 0x03 ...
+		}
 	}
 }
 ```
